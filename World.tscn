@@ -1,20 +1,153 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://Scripts/Camera.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/World.gd" type="Script" id=2]
+[ext_resource path="res://Assets/kenney.nl/muzzle_02.png" type="Texture" id=3]
+[ext_resource path="res://Assets/rigzsoft/Liquids/splash.png" type="Texture" id=4]
+[ext_resource path="res://Assets/rigzsoft/Liquids/splashes.png" type="Texture" id=5]
+[ext_resource path="res://Assets/kenney.nl/smoke_09.png" type="Texture" id=6]
+
+[sub_resource type="Gradient" id=1]
+offsets = PoolRealArray( 0.0342857, 0.52381, 0.822857, 1 )
+colors = PoolColorArray( 0.9375, 0.293341, 0.0695801, 1, 0.952941, 0.32549, 0.0509804, 1, 0.92549, 0.563388, 0.0509804, 0.996078, 0.92549, 0.768627, 0.152941, 0.72549 )
+
+[sub_resource type="GradientTexture" id=2]
+gradient = SubResource( 1 )
+
+[sub_resource type="Curve" id=3]
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 1 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=4]
+curve = SubResource( 3 )
+
+[sub_resource type="ParticlesMaterial" id=5]
+lifetime_randomness = 1.0
+trail_size_modifier = SubResource( 4 )
+emission_shape = 2
+emission_box_extents = Vector3( 4, 4, 1 )
+flag_disable_z = true
+spread = 68.23
+gravity = Vector3( 0, -30, 0 )
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+color_ramp = SubResource( 2 )
+anim_speed = 103.23
+anim_speed_random = 1.0
+
+[sub_resource type="ParticlesMaterial" id=6]
+lifetime_randomness = 1.0
+flag_disable_z = true
+direction = Vector3( 1, 1, 0 )
+spread = 180.0
+flatness = 0.35
+gravity = Vector3( 0, -50, 0 )
+initial_velocity = 40.0
+angular_velocity = 28.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+linear_accel = 1.0
+damping = 22.0
+angle = 45.0
+angle_random = 1.0
+
+[sub_resource type="ParticlesMaterial" id=7]
+flag_disable_z = true
+gravity = Vector3( 0, -30, 0 )
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+
+[sub_resource type="AtlasTexture" id=8]
+flags = 4
+atlas = ExtResource( 5 )
+region = Rect2( 0, 0, 256, 256 )
+
+[sub_resource type="AtlasTexture" id=9]
+flags = 4
+atlas = ExtResource( 5 )
+region = Rect2( 256, 0, 256, 256 )
+
+[sub_resource type="AtlasTexture" id=10]
+flags = 4
+atlas = ExtResource( 5 )
+region = Rect2( 0, 256, 256, 256 )
+
+[sub_resource type="AtlasTexture" id=11]
+flags = 4
+atlas = ExtResource( 5 )
+region = Rect2( 256, 256, 256, 256 )
+
+[sub_resource type="SpriteFrames" id=12]
+animations = [ {
+"frames": [ SubResource( 8 ), SubResource( 9 ), SubResource( 10 ), SubResource( 11 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
 
 [node name="World" type="Node2D"]
 script = ExtResource( 2 )
 
 [node name="Particles1" type="Particles2D" parent="."]
-position = Vector2( 128, 256 )
+position = Vector2( 186.6, 285.026 )
+lifetime = 6.0
+speed_scale = 0.7
+randomness = 1.0
+process_material = SubResource( 5 )
+texture = ExtResource( 3 )
 
 [node name="Particles2" type="Particles2D" parent="."]
-position = Vector2( 512, 256 )
+position = Vector2( 534.101, 292.601 )
+lifetime = 1.6
+preprocess = 0.25
+speed_scale = 1.5
+explosiveness = 1.0
+process_material = SubResource( 6 )
+texture = ExtResource( 6 )
 
 [node name="Particles3" type="Particles2D" parent="."]
-position = Vector2( 896, 256 )
+modulate = Color( 0.0745098, 0.419608, 0.905882, 1 )
+position = Vector2( 864.538, 286.449 )
+process_material = SubResource( 7 )
+texture = ExtResource( 4 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="Particles3"]
+frames = SubResource( 12 )
+frame = 1
+playing = true
 
 [node name="Camera" type="Camera2D" parent="."]
 position = Vector2( 512, 304 )
 script = ExtResource( 1 )
+
+[node name="Fire" type="Label" parent="."]
+margin_left = 129.184
+margin_top = 514.687
+margin_right = 169.184
+margin_bottom = 528.687
+rect_scale = Vector2( 3.07976, 2.67037 )
+text = "FIRE"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Hurricane" type="Label" parent="."]
+margin_left = 416.261
+margin_top = 504.435
+margin_right = 478.261
+margin_bottom = 518.435
+rect_scale = Vector2( 3.07976, 2.67037 )
+text = "Hurricane"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="water" type="Label" parent="."]
+margin_left = 814.067
+margin_top = 506.485
+margin_right = 854.067
+margin_bottom = 520.485
+rect_scale = Vector2( 3.33379, 3.27595 )
+text = "Water"
+__meta__ = {
+"_edit_use_anchors_": false
+}
